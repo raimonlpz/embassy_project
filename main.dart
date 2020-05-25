@@ -34,7 +34,7 @@ class MyApp extends StatelessWidget {
     ]);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'OriginBuds',
+      title: 'Embassy',
       theme: ThemeData(
         primarySwatch: Colors.grey,
         fontFamily: 'Altero',
@@ -303,3 +303,4 @@ class _MyHomePageState extends State<MyHomePage> {
 // NEUMORPHIC AESTHETICS - https://pub.dev/packages/flutter_neumorphic
 // TINDER CARD - https://pub.dev/packages/flutter_tindercard
 // AUTH INSTA/FB - https://pub.dev/packages/simple_auth_flutter
+// INSTA AUTH/IMAGE PICKER - https://pub.dev/packages/flutter_instagram_image_picker#-example-tab-

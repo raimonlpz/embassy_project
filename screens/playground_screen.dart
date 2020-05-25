@@ -121,7 +121,7 @@ class _PlaygroundScreenState extends State<PlaygroundScreen>
         BackButtonWidget(ctx),
         Container(
           alignment: Alignment.bottomCenter,
-          margin: EdgeInsets.only(bottom: 45, left: 50, right: 50),
+          margin: EdgeInsets.only(bottom: 35, left: 50, right: 50),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
