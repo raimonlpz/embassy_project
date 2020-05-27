@@ -1,7 +1,12 @@
+import 'package:awesome_page_transitions/awesome_page_transitions.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
+import 'package:flutter_gradients/flutter_gradients.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
-import '../screens/playground_screen.dart';
 import 'package:flutter_icons/flutter_icons.dart';
+import '../screens/playground_screen.dart';
+//import '../screens/profile_screen.dart';
+import '../screens/homepage.dart';
 
 class NavDrawer extends StatelessWidget {
   toggledDivider(double _thickness, dynamic ctx) {
@@ -14,10 +19,19 @@ class NavDrawer extends StatelessWidget {
     );
   }
 
-  toggledTile(dynamic _icon, String title, dynamic ctx) {
+  toggledTile(dynamic _icon, String title, dynamic ctx, Widget screen) {
     return ListTile(
       onTap: () {
-        Navigator.of(ctx).pushNamed(PlaygroundScreen.routeName, arguments: ctx);
+        //Navigator.of(ctx).pushNamed(route, arguments: ctx);
+        Navigator.push(
+          ctx,
+          AwesomePageRoute(
+            transitionDuration: Duration(milliseconds: 300),
+            exitPage: HomePage(),
+            enterPage: screen,
+            transition: StackTransition(),
+          ),
+        );
       },
       leading: Icon(
         _icon,
@@ -39,7 +53,7 @@ class NavDrawer extends StatelessWidget {
 
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(bottom: 120),
+      margin: EdgeInsets.only(bottom: 130),
       child: ClipRRect(
         borderRadius: BorderRadius.only(
           topRight: Radius.circular(30),
@@ -49,39 +63,18 @@ class NavDrawer extends StatelessWidget {
           child: ListView(
             children: <Widget>[
               Container(
-                margin: EdgeInsets.only(left: 70, right: 70, bottom: 10),
-                height: 100,
+                //margin: EdgeInsets.only(left: 70, right: 70, bottom: 10),
+                height: 80,
                 child: DrawerHeader(
-                  child: Neumorphic(
-                    boxShape:
-                        NeumorphicBoxShape.roundRect(BorderRadius.circular(12)),
-                    style: NeumorphicStyle(
-                        border: NeumorphicBorder(
-                          color: NeumorphicTheme.isUsingDark(context)
-                              ? Colors.grey[800]
-                              : Colors.white,
-                          width: 2.5,
-                        ),
-                        shape: NeumorphicShape.convex,
-                        depth: 8,
-                        lightSource: LightSource.topLeft,
-                        color: NeumorphicTheme.isUsingDark(context)
-                            ? null
-                            : Colors.white),
+                  padding: EdgeInsets.all(0),
+                  margin: EdgeInsets.only(top: 11),
+                  child: ClipPath(
+                    clipper: WaveClipperOne(),
                     child: Container(
-                      margin: EdgeInsets.only(bottom: 10),
-                      child: Container(
-                        margin: EdgeInsets.only(top: 10),
-                        child: Center(
-                          child: Icon(
-                            Entypo.air,
-                            size: 30,
-                            color: NeumorphicTheme.isUsingDark(context)
-                                ? Colors.yellow[100]
-                                : Colors.black,
-                          ),
-                        ),
+                      decoration: BoxDecoration(
+                        gradient: FlutterGradients.forestInei(),
                       ),
+                      width: MediaQuery.of(context).size.width,
                     ),
                   ),
                 ),
@@ -89,16 +82,20 @@ class NavDrawer extends StatelessWidget {
               Container(
                 child: Column(
                   children: [
-                    toggledTile(Icons.insert_emoticon, 'Profile', context),
+                    toggledTile(Icons.insert_emoticon, 'Profile', context,
+                        PlaygroundScreen(context)),
+                    toggledDivider(1, context),
+                    toggledTile(MaterialCommunityIcons.cards, 'Playground',
+                        context, PlaygroundScreen(context)),
+                    toggledDivider(1, context),
+                    toggledTile(Ionicons.ios_chatbubbles, 'Chats', context,
+                        PlaygroundScreen(context)),
+                    toggledDivider(1, context),
+                    toggledTile(Icons.settings, 'Settings', context,
+                        PlaygroundScreen(context)),
                     toggledDivider(1, context),
                     toggledTile(
-                        MaterialCommunityIcons.cards, 'Playground', context),
-                    toggledDivider(1, context),
-                    toggledTile(Ionicons.ios_chatbubbles, 'Chats', context),
-                    toggledDivider(1, context),
-                    toggledTile(Icons.settings, 'Settings', context),
-                    toggledDivider(1, context),
-                    toggledTile(Icons.help, 'Help', context),
+                        Icons.help, 'Help', context, PlaygroundScreen(context)),
                     toggledDivider(4, context),
                     Container(
                       margin: EdgeInsets.only(right: 10),

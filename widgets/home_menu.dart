@@ -1,10 +1,13 @@
+import 'package:awesome_page_transitions/awesome_page_transitions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+import '../screens/homepage.dart';
 import '../screens/playground_screen.dart';
+//import '../screens/profile_screen.dart';
 
 class HomeMenu extends StatelessWidget {
-  Widget menuItem(IconData icon, dynamic ctx, dynamic route) {
+  Widget menuItem(IconData icon, dynamic ctx, Widget route) {
     return Container(
       child: NeumorphicButton(
         boxShape: NeumorphicBoxShape.circle(),
@@ -29,7 +32,15 @@ class HomeMenu extends StatelessWidget {
           size: 30,
         ),
         onClick: () {
-          Navigator.of(ctx).pushNamed(route, arguments: ctx);
+          //Navigator.of(ctx).pushNamed(route, arguments: ctx);
+          Navigator.push(
+              ctx,
+              AwesomePageRoute(
+                transitionDuration: Duration(milliseconds: 300),
+                exitPage: HomePage(),
+                enterPage: route,
+                transition: StackTransition(),
+              ));
         },
       ),
     );
@@ -42,10 +53,10 @@ class HomeMenu extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           menuItem(MaterialCommunityIcons.cards_outline, context,
-              PlaygroundScreen.routeName),
+              PlaygroundScreen(context)),
           menuItem(
-              Ionicons.ios_chatbubbles, context, PlaygroundScreen.routeName),
-          menuItem(Icons.insert_emoticon, context, PlaygroundScreen.routeName),
+              Ionicons.ios_chatbubbles, context, PlaygroundScreen(context)),
+          menuItem(Icons.insert_emoticon, context, PlaygroundScreen(context)),
         ],
       ),
     );

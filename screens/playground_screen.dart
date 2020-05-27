@@ -6,11 +6,15 @@ import 'package:flutter_tindercard/flutter_tindercard.dart';
 import '../widgets/card_play.dart';
 import 'package:disposebag/disposebag.dart';
 import '../models/ambassador.dart';
+import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
+import 'package:flutter_gradients/flutter_gradients.dart';
 
 enum SearchGender { Male, Female, None }
 
 class PlaygroundScreen extends StatefulWidget {
-  static final routeName = '/audio-repro-screen';
+  final ctx;
+  PlaygroundScreen(this.ctx);
+  static final routeName = '/playground-screen';
   createState() => _PlaygroundScreenState();
 }
 
@@ -37,50 +41,74 @@ class _PlaygroundScreenState extends State<PlaygroundScreen>
   }
 
   Widget build(BuildContext context) {
-    final ctx = ModalRoute.of(context).settings.arguments;
+    //final ctx = ModalRoute.of(context).settings.arguments;
     return Scaffold(
       key: scaffoldKey,
-      backgroundColor: NeumorphicTheme.baseColor(ctx),
+      backgroundColor: NeumorphicTheme.baseColor(widget.ctx),
       body: Stack(children: [
-        Center(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Neumorphic(
-                padding: EdgeInsets.all(8),
-                boxShape: NeumorphicBoxShape.circle(),
-                style: NeumorphicStyle(
-                    border: NeumorphicBorder(
-                      color: NeumorphicTheme.baseColor(ctx),
-                      width: 0.5,
-                    ),
-                    shape: NeumorphicShape.convex,
-                    depth: 3,
-                    lightSource: LightSource.topLeft,
-                    color: NeumorphicTheme.baseColor(ctx)),
-                child: Icon(Foundation.asterisk,
-                    size: 50,
-                    color: NeumorphicTheme.isUsingDark(ctx)
-                        ? Colors.yellow[100]
-                        : Colors.black),
+        ClipPath(
+          clipper: WaveClipperOne(),
+          child: Container(
+            decoration: BoxDecoration(
+              gradient: FlutterGradients.forestInei(),
+            ),
+            height: 270,
+            width: MediaQuery.of(context).size.width,
+          ),
+        ),
+        Container(
+          alignment: Alignment.bottomCenter,
+          child: ClipPath(
+            clipper: WaveClipperOne(reverse: true, flip: true),
+            child: Container(
+              decoration: BoxDecoration(
+                gradient: FlutterGradients.forestInei(),
               ),
-              SizedBox(height: 20),
-              Text('Oops...',
-                  style: TextStyle(
-                      fontFamily: 'Grifter',
-                      fontSize: 15,
-                      color: NeumorphicTheme.isUsingDark(ctx)
+              height: 120,
+            ),
+          ),
+        ),
+        Container(
+          child: Center(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Neumorphic(
+                  padding: EdgeInsets.all(8),
+                  boxShape: NeumorphicBoxShape.circle(),
+                  style: NeumorphicStyle(
+                      border: NeumorphicBorder(
+                        color: NeumorphicTheme.baseColor(widget.ctx),
+                        width: 0.5,
+                      ),
+                      shape: NeumorphicShape.convex,
+                      depth: 3,
+                      lightSource: LightSource.topLeft,
+                      color: NeumorphicTheme.baseColor(widget.ctx)),
+                  child: Icon(Foundation.asterisk,
+                      size: 50,
+                      color: NeumorphicTheme.isUsingDark(widget.ctx)
                           ? Colors.yellow[100]
-                          : Colors.black)),
-              SizedBox(height: 20),
-              Text('No more ambassadors for now!',
-                  style: TextStyle(
-                      fontFamily: 'Grifter',
-                      fontSize: 12,
-                      color: NeumorphicTheme.isUsingDark(ctx)
-                          ? Colors.yellow[100]
-                          : Colors.black))
-            ],
+                          : Colors.black),
+                ),
+                SizedBox(height: 20),
+                Text('Oops...',
+                    style: TextStyle(
+                        fontFamily: 'Grifter',
+                        fontSize: 15,
+                        color: NeumorphicTheme.isUsingDark(widget.ctx)
+                            ? Colors.yellow[100]
+                            : Colors.black)),
+                SizedBox(height: 10),
+                Text('No more ambassadors for now!',
+                    style: TextStyle(
+                        fontFamily: 'Grifter',
+                        fontSize: 14,
+                        color: NeumorphicTheme.isUsingDark(widget.ctx)
+                            ? Colors.yellow[100]
+                            : Colors.black))
+              ],
+            ),
           ),
         ),
         Center(
@@ -89,17 +117,17 @@ class _PlaygroundScreenState extends State<PlaygroundScreen>
             height: MediaQuery.of(context).size.height * 0.9,
             width: MediaQuery.of(context).size.width,
             child: TinderSwapCard(
-                animDuration: 230,
+                animDuration: 50,
                 orientation: AmassOrientation.BOTTOM,
                 totalNum: _ambassadors.length,
                 stackNum: 3,
-                swipeEdge: 4.0,
+                swipeEdge: 2.0,
                 maxWidth: MediaQuery.of(context).size.width * 0.9,
                 maxHeight: MediaQuery.of(context).size.height * 0.9,
-                minWidth: MediaQuery.of(context).size.width * 0.85,
-                minHeight: MediaQuery.of(context).size.height * 0.85,
+                minWidth: MediaQuery.of(context).size.width * 0.78,
+                minHeight: MediaQuery.of(context).size.height * 0.78,
                 cardBuilder: (_context, ind) => SingleChildScrollView(
-                      child: CardPlay(_ambassadors[ind], ctx),
+                      child: CardPlay(_ambassadors[ind], widget.ctx),
                     ),
                 cardController: controller,
                 swipeUpdateCallback:
@@ -118,7 +146,7 @@ class _PlaygroundScreenState extends State<PlaygroundScreen>
                 }),
           ),
         ),
-        BackButtonWidget(ctx),
+        BackButtonWidget(widget.ctx),
         Container(
           alignment: Alignment.bottomCenter,
           margin: EdgeInsets.only(bottom: 35, left: 50, right: 50),
@@ -128,7 +156,7 @@ class _PlaygroundScreenState extends State<PlaygroundScreen>
               NeumorphicRadio(
                 boxShape: NeumorphicBoxShape.circle(),
                 style: NeumorphicRadioStyle(
-                  unselectedColor: NeumorphicTheme.baseColor(ctx),
+                  unselectedColor: NeumorphicTheme.baseColor(widget.ctx),
                 ),
                 value: SearchGender.Male,
                 groupValue: genderFilter,
@@ -140,7 +168,7 @@ class _PlaygroundScreenState extends State<PlaygroundScreen>
                 padding: EdgeInsets.all(15.0),
                 child: Icon(
                   Ionicons.ios_male,
-                  color: NeumorphicTheme.isUsingDark(ctx)
+                  color: NeumorphicTheme.isUsingDark(widget.ctx)
                       ? Colors.yellow[100]
                       : Colors.black,
                 ),
@@ -148,7 +176,7 @@ class _PlaygroundScreenState extends State<PlaygroundScreen>
               NeumorphicRadio(
                 boxShape: NeumorphicBoxShape.circle(),
                 style: NeumorphicRadioStyle(
-                  unselectedColor: NeumorphicTheme.baseColor(ctx),
+                  unselectedColor: NeumorphicTheme.baseColor(widget.ctx),
                 ),
                 value: SearchGender.Female,
                 groupValue: genderFilter,
@@ -160,14 +188,14 @@ class _PlaygroundScreenState extends State<PlaygroundScreen>
                 padding: EdgeInsets.all(15.0),
                 child: Icon(
                   Ionicons.ios_female,
-                  color: NeumorphicTheme.isUsingDark(ctx)
+                  color: NeumorphicTheme.isUsingDark(widget.ctx)
                       ? Colors.yellow[100]
                       : Colors.black,
                 ),
               ),
               NeumorphicRadio(
                 style: NeumorphicRadioStyle(
-                  unselectedColor: NeumorphicTheme.baseColor(ctx),
+                  unselectedColor: NeumorphicTheme.baseColor(widget.ctx),
                 ),
                 boxShape: NeumorphicBoxShape.circle(),
                 value: SearchGender.None,
@@ -180,7 +208,7 @@ class _PlaygroundScreenState extends State<PlaygroundScreen>
                 padding: EdgeInsets.all(15.0),
                 child: Icon(
                   Ionicons.ios_transgender,
-                  color: NeumorphicTheme.isUsingDark(ctx)
+                  color: NeumorphicTheme.isUsingDark(widget.ctx)
                       ? Colors.yellow[100]
                       : Colors.black,
                 ),

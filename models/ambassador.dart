@@ -20,15 +20,15 @@ class Analytics {
   List<int> commentsGraph;
 
   Analytics({
-    @required this.totalLikes,
-    @required this.totalComments,
-    @required this.totalViews,
-    @required this.followers,
-    @required this.following,
-    @required this.postsTimestamps,
-    @required this.postsUrl,
-    @required this.totalPosts,
-    @required this.totalVideos,
+    this.totalLikes,
+    this.totalComments,
+    this.totalViews,
+    this.followers,
+    this.following,
+    this.postsTimestamps,
+    this.postsUrl,
+    this.totalPosts,
+    this.totalVideos,
     this.engagementRatio,
     this.averageCommentsPerPost,
     this.averageLikesPerPost,
@@ -74,7 +74,6 @@ class Analytics {
     DateTime firstPostDate = new DateTime.fromMillisecondsSinceEpoch(
         this.postsTimestamps[this.postsTimestamps.length - 1] * 1000);
     int datesDiffInDays = DateTime.now().difference(firstPostDate).inDays;
-    //print('DAYS DIFFERENCE: $datesDiffInDays');
     this.averagePostsPerWeek =
         (this.totalPosts + this.totalVideos) / datesDiffInDays;
   }
@@ -179,6 +178,7 @@ List<Ambassador> ambassadors = [
   Ambassador(
     id: '1',
     username: 'mariapombo',
+    gender: 'female',
     mail: 'm.pombo123@mail.com',
     age: 32,
     verified: true,
@@ -187,7 +187,7 @@ List<Ambassador> ambassadors = [
         'Let your plans be dark and impenetrable as night, and when you move, fall like a thunderbolt.⛷⛷',
     imageUrl:
         'https://i.pinimg.com/originals/9d/9d/8e/9d9d8e26601d329b3143993d21ae2bce.jpg',
-    references: ['running', 'crossfit'],
+    references: ['moda', 'beauty'],
     companiesIdLiked: [],
     companiesIdMatched: [],
     companiesIdDisliked: [],
@@ -346,36 +346,43 @@ List<Ambassador> ambassadors = [
         ]),
   ),
   Ambassador(
-    id: '2',
-    username: 'Sandra',
-    mail: 'sandru23@mail.com',
-    age: 23,
-    verified: false,
-    location: 'Selva de Mar, Girona',
-    description:
-        'Supreme excellence consists of breaking the enemys resistance without fighting.⚾',
-    imageUrl:
-        'https://cdn.21buttons.com/posts/1080x1350/76afe020c4ba4bac8283e5b8c5c7f353_1080x1350.jpg',
-    references: ['crossfit', 'triathlon'],
-    companiesIdLiked: [],
-    companiesIdMatched: [],
-    companiesIdDisliked: [],
-    companiesIdPool: [],
-    chatsActiveId: [],
-    salaryExpectation: 100,
-  ),
+      id: '2',
+      username: 'sandra.dior80',
+      gender: 'female',
+      mail: 'sandru23@mail.com',
+      age: 23,
+      verified: false,
+      location: 'Selva de Mar, Girona',
+      description:
+          'Supreme excellence consists of breaking the enemys resistance without fighting.⚾',
+      imageUrl:
+          'https://cdn.21buttons.com/posts/1080x1350/76afe020c4ba4bac8283e5b8c5c7f353_1080x1350.jpg',
+      references: ['foodie', 'beauty'],
+      companiesIdLiked: [],
+      companiesIdMatched: [],
+      companiesIdDisliked: [],
+      companiesIdPool: [],
+      chatsActiveId: [],
+      salaryExpectation: 100,
+      analytics: Analytics(
+        followers: 64007,
+      )),
   Ambassador(
     id: '3',
-    username: 'Jon',
+    username: 'jon.etxeva',
     mail: 'jonny23@mail.com',
     age: 18,
+    gender: 'male',
     verified: false,
     location: 'Castelldefels, Bcn',
+    analytics: Analytics(
+      followers: 12007,
+    ),
     description:
         'Victorious warriors win first and then go to war, while defeated warriors go to war first and then seek to win⛷⛺',
     imageUrl:
         'https://i.pinimg.com/736x/19/e5/39/19e539125437cfd4f22c3b8b80bacb99.jpg',
-    references: ['swimming', 'triathlon'],
+    references: ['streetwear', 'moda'],
     companiesIdLiked: [],
     companiesIdMatched: [],
     companiesIdDisliked: [],
@@ -385,7 +392,8 @@ List<Ambassador> ambassadors = [
   ),
   Ambassador(
     id: '4',
-    username: 'Derik',
+    username: 'eric_toledo',
+    gender: 'male',
     mail: 'moni666@mail.com',
     age: 28,
     verified: true,
@@ -394,12 +402,15 @@ List<Ambassador> ambassadors = [
         'There is no instance of a nation benefitting from prolonged warfare.⛹⛹⛹',
     imageUrl:
         'https://estaticos.elperiodico.com/resources/jpg/2/9/zentauroepp48260237-mas-periodico-instagramer-influencer-pepe-barroso-silva190523120841-1558606296392.jpg',
-    references: ['running', 'crossfit'],
+    references: ['moda', 'sport'],
     companiesIdLiked: [],
     companiesIdMatched: [],
     companiesIdDisliked: [],
     companiesIdPool: [],
     chatsActiveId: [],
     salaryExpectation: 100,
+    analytics: Analytics(
+      followers: 100372,
+    ),
   ),
 ];
